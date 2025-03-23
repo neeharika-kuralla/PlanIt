@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goals Page</title>
+    <link rel="stylesheet" href="/nav.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F1E4E8;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        h2 img {
+            height: 24px;
+            width: 24px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        form button {
+            background-color: #B97375;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #B97375;
+        }
+
+        /* Goals List Styling */
+        .goal-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .goal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .goal-item:hover {
+            transform: scale(1.02);
+        }
+
+        .goal-item p {
+            font-size: 16px;
+            color: #2D2D34;
+            margin: 0;
+            flex: 1;
+        }
+
+        .goal-item form {
+            margin: 0;
+        }
+
+        .goal-item button {
+            background-color: #2D2D34;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .goal-item button:hover {
+            background-color: #B97375;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <%- include("includes/nav.ejs",{data}) %>
+
+    <!-- Page Content -->
+    <h2>Goals</h2>
+    
+    <!-- Add Goal Form -->
+    <form method="post" action="/<%=data.id%>/goals">
+        <input type="text" name="goal" placeholder="Add Goal">
+        <button type="submit">+</button>
+    </form>
+
+    <!-- Goals List -->
+    <div class="goal-list">
+        <% goals.forEach(goal => { %>
+            <div class="goal-item">
+                <p><%= goal.goal_name %></p>
+                <form method="post" action="/<%= data.id %>/goals/<%= goal.goal_id %>?_method=DELETE">
+                    <button type="submit">X</button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>

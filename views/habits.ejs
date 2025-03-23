@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <style>
+       body {
+    display: flex;
+    margin: 0;
+    background-color: #F1E4E8;
+}
+
+header {
+    width: 200px; /* Fixed width for the navbar */
+    padding: 20px;
+    height: 100vh; /* Full height */
+    position: fixed; /* Fix navbar on the side */
+}
+
+.habit-container {
+    margin-left: 320px; /* Space for the navbar */
+    width: 70%;  /* Adjust width of habit tracker */
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 100px;  /* Space from the navbar */
+}
+.habit-container input{
+    padding: 4px;
+}
+.habit-container button{
+    background-color: #B97375;
+    border: none;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+.days-row {
+    display: flex;
+    position: relative;
+    left:43%;
+    margin-bottom: 10px;
+}
+
+.days-row label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 13px;
+    text-align: center;
+}
+
+.habit-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.habit-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.habit-item p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    flex-grow: 1;
+    position: absolute;
+    right: 685px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.habit-item form {
+    margin-left: 10px;
+}
+
+.habit-item button {
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #B97375;
+    padding: 5px 10px;
+    position: absolute;
+    left: 950px;
+}
+
+.habit-item button:hover {
+    background-color: darkred;
+}
+    </style>
+    <link rel="stylesheet" href="/nav.css">
+</head>
+<body>
+    <!-- Sidebar Navbar -->
+    <header>
+        <%- include("includes/nav.ejs",{data}) %>  <!-- This will include your nav bar -->
+    </header>
+    <!-- Habit Tracker Content -->
+    <div class="habit-container">
+        <h1>Habit Tracker</h1>
+        <form method="post" action="/<%= data.id %>/habits">
+            <input type="text" placeholder="Habit" name="habit">
+            <button>Add</button>
+        </form>
+        
+        <!-- Days Row (Only printed once) -->
+        <div class="days-row">
+            <label for="day1">S</label>
+            <label for="day2">M</label>
+            <label for="day3">T</label>
+            <label for="day4">W</label>
+            <label for="day5">T</label>
+            <label for="day6">F</label>
+            <label for="day7">S</label>
+        </div>
+        
+        <div class="habit-list">
+            <% habits.forEach(habit => { %>
+                <div class="habit-item">
+                    <p><%= habit.habit_name %></p>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day1_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day2_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day3_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day4_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day5_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day6_<%= habit.id %>">
+                        <input type="checkbox" name="habit_<%= habit.id %>" id="day7_<%= habit.id %>">
+                    </div>
+        
+                    <!-- Single delete button below all checkboxes for the habit -->
+                    <form method="post" action="/<%=data.id%>/habits/<%= habit.habit_id %>?_method=DELETE">
+                        <button>X</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
+

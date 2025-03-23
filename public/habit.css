@@ -1,0 +1,77 @@
+.habitracker {
+    width: 1150px;
+    height:620px;
+    padding-left:40px;
+    box-sizing: border-box;
+    margin-left: 220px;
+}
+.number-row{
+    padding-left: 240px;
+    font-weight: 100;
+    font-size: 14px;
+}
+.number-row span{
+    margin-right: 15px;
+}
+
+
+.habit-input {
+    flex-shrink: 0;
+    width: 200px; /* Adjust width as needed */
+    padding: 5px;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    flex-grow: 1; /* Make checkboxes take the remaining space */
+    justify-content: flex-start;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-container label {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color:#D9DCD6;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"]:checked + label {
+    background-color:#D98586;
+}
+
+.checkbox-container input[type="checkbox"]:checked + label::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.habit-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Space between habit containers */
+}
+.add-habit{
+    border: none;
+    font-size: larger;
+    border-radius: 20px;
+}

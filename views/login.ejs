@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id="login" action="/login" method="post">
+        <h1>Login</h1>
+    <class="input-box">
+        <input type="text" id="name" name="uname" placeholder="User Name" class="data">
+    <div class="icon">
+    <input type="password" id="pass" name="password" placeholder="Password" class="data">
+    <img src="hide.png" id="eyeicon">
+    </div>
+    <button type="submit" id="btn">Login</button>
+
+</form>
+<script>
+    let eyeicon= document.getElementById("eyeicon");
+    let passowrd= document.getElementById("pass");
+
+    eyeicon.addEventListener("click",()=>{
+        if(passowrd.type=="password"){
+            passowrd.type="text";
+            eyeicon.src="show.png";
+        }
+        else{
+            passowrd.type="password";
+            eyeicon.src="hide.png";
+        }
+    })
+</script>
+</body>
+</html>

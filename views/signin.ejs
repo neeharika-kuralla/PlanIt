@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signin Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</head>
+<body>
+    <h1 id="websitename">PlanIt</h1>
+    <h1 id="quote">"Turn your to-dos into ta-das with the perfect planner"</h1>
+    <form id="signup" action="/signup" method="POST">
+        <div>
+            <h2>Sign up</h2>
+            <input type="text" id="fname" name="fname" placeholder="First Name" class="data">
+            <input type="text" id="lname" name="lname" placeholder="Last Name" class="data">
+            <input type="text" id="uname" name="uname" placeholder="User Name" class="data">
+            <input type="date" id="dob" name="dob" class="data">
+            <input type="password" id="pass" name="password" placeholder="Password" class="data">
+            <input type="password" id="confirmpass" name="confirmpass" placeholder="Confirm Password" class="data">
+            <p id="error-msg"></p>
+            <div class="g-recaptcha" data-sitekey="6LdrTMEqAAAAAPs22lsfGEq7qsqLEdQ3Mn0vI4b6"></div>
+            <button type="submit" id="btn">Sign in</button>
+            <div id="loginfromsignup">
+            <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

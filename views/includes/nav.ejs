@@ -1,0 +1,106 @@
+<!-- Inside nav.ejs -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<div class="sidebar close">
+    <ul class="nav-links">
+        <li>
+            <a href="/signup/<%=data.id%>/home">
+                <i class='bx bxs-home'></i>
+                <span class="link_name">Home</span>
+            </a>
+
+        </li>
+        <li>
+            <div class="icon-link">
+                <a href="/<%=data.id%>/tasks/new">
+                    <i class='bx bx-task'></i>
+                    <span class="link_name">Task List</span>
+                </a>
+            </div>
+        </li>
+         
+        <li>
+            <div class="icon-link">
+                <a href="/<%=data.id%>/calender">
+                    <i class='bx bx-calendar-event'></i>
+                    <span class="link_name">Calender</span>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="icon-link">
+                <a href="/<%=data.id%>/goals/new">
+                    <i class='bx bx-receipt'></i>
+                    <span class="link_name">Goals</span>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="icon-link">
+                <a href="/<%=data.id%>/habits/new">
+                    <i class='bx bx-spreadsheet'></i>
+                    <span class="link_name">Habits</span>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="icon-link">
+                <a href="#">
+                    <i class='bx bx-customize'></i>
+                    <span class="link_name">Customize</span>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="icon-link">
+                <a href="#">
+                    <i class='bx bx-toggle-left'></i>
+                    <span class="link_name">Change Mode</span>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+<section class="home-section">
+    <div class="home-content">
+        <i class='bx bx-menu' ></i>
+        <span class="text"></span>
+    </div>
+</section>
+
+<!-- Profile dropdown section -->
+<div class="profile-dropdown">
+    <div class="profile">
+        <p id="profile-icon">Profile</p>
+        
+    </div>
+    <div class="dropdown-menu hide" id="dropdown-menu">
+        <p class="dropdown-item"><%=data.fname+" "+data.lname%></p>
+        <a class="dropdown-item" href="/logout">Logout</a>
+    </div>
+</div>
+<script>
+
+    //Nav bar 
+    let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+    
+        sidebarBtn.addEventListener("click", () => {
+            // Toggle the sidebar's close state
+            sidebar.classList.toggle("close");
+        });
+
+    //Profile
+    const profileIcon = document.getElementById("profile-icon");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+
+    profileIcon.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("show");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+        if (!profileIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("show");
+        }
+    });
+</script>

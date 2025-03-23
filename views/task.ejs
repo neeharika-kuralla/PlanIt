@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="/nav.css">
+    <link rel="stylesheet" href="/task.css">
+
+</head>
+<body>
+    <header>
+        <%- include("includes/nav.ejs", {data}) %> <!-- Include your nav bar -->
+    </header>
+    <main>
+        <h2>Task Categories</h2>
+
+        <!-- Add Category Form -->
+        <form action="/<%= data.id %>/categories" method="POST" id="add-category-form">
+            <input type="text" name="category_name" placeholder="Enter a category name" required>
+            <button type="submit">Add Category</button>
+        </form>
+
+        <!-- Categories Container -->
+        <div id="categories-container">
+            <% for (let categoryId in categories) { %>
+                <div class="category-box" style="background-color: #CEB1BE">
+                    <h3><%= categories[categoryId].category_name %></h3>
+        
+                    <!-- Delete Category Form -->
+                    <form action="/<%= data.id %>/categories/<%= categoryId %>?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-category-btn">Delete Category</button>
+                    </form>
+        
+                    <!-- Add Task Form for this category -->
+                    <form action="/<%= data.id %>/tasks/<%= categoryId %>" method="POST" style="display:inline;">
+                        <input type="text" name="task_name" placeholder="Add your task" required>
+                        <input type="date" name="due_date" required>
+                        <button type="submit">Add Task</button>
+                    </form>
+        
+                    <!-- Task List for this category -->
+                    <% if (categories[categoryId].tasks.length > 0) { %>
+                        <ul class="task-list">
+                            <% categories[categoryId].tasks.forEach(task => { %>
+                                <li>
+                                    <input type="radio" id="status">
+                                    <h6 id="task"><%= task.task_name %></h6>
+                                     <h6 id="date"><%= new Date(task.due_date).toISOString().split("T")[0] %></h6>
+
+                                    <form action="/<%= data.id %>/tasks/<%= task.task_id %>?_method=DELETE" method="POST" style="display:inline;">
+                                        <button type="submit" class="delete-btn">&times;</button>
+                                    </form>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } else { %>
+                        <p class="no-tasks">No tasks in this category.</p>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+        
+    </main>
+</body>
+<script>
+    let statusBtns = document.querySelectorAll("#status");
+
+    statusBtns.forEach(statusBtn => {
+    statusBtn.addEventListener("click", () => {
+        let taskname = statusBtn.parentElement.querySelector("#task");
+        let date = statusBtn.parentElement.querySelector("#date");
+        taskname.classList.toggle("strikethrough");
+        date.classList.toggle("strikethrough");
+  });
+});
+
+</script>
+</html>
+
+
+
+

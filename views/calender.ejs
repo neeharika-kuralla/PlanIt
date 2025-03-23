@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Page</title>
+    <link rel="stylesheet" href="/nav.css">
+    <style>
+        /* Add borders to calendar table */
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #F1E4E8;
+}
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 220px;
+}
+th, td {
+    border: 1px solid #CEB1BE;
+    text-align: center;
+    position: relative;
+}
+th {
+    background-color:transparent;
+}
+td {
+    height: 90px;
+    width: 50px;
+    vertical-align: top;
+}
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.month-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.month-nav button {
+    margin: 10px 10px;
+    padding: 3px;
+    background-color:#CEB1BE;
+    border:none;
+    border-radius: 3px;
+}
+.hidden-input {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    width:100px;
+    height:20px;
+}
+td button {
+    display: block;
+    font-weight: 600;
+    margin-left: 35%;
+    border: none;
+    background-color: transparent;
+}
+
+    </style>
+    
+</head>
+<body>
+    <%- include("includes/nav.ejs",{ data }) %>
+
+    <div class="header">
+        <h1 id="month-year"></h1>
+    </div>
+
+    <div class="month-nav">
+        <button onclick="prevMonth()">Previous</button>
+        <button onclick="nextMonth()">Next</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+            <!-- Calendar dates will be generated here by JavaScript -->
+        </tbody>
+    </table>
+    <div id="custom-modal" style="display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: #F1E4E8; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000; border-radius: 10px; width: 300px; text-align: center;">
+        <p id="modal-content"></p>
+        <button onclick="closeModal()">Close</button>
+    </div>
+    <div id="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+    
+
+    <!-- Pass tasks to the frontend as a JavaScript variable -->
+    <script>
+        const tasks = <%- JSON.stringify(tasks || []) %>;
+                
+
+        const currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+        function openModal(content) {
+        document.getElementById('modal-content').innerText = content;
+        document.getElementById('custom-modal').style.display = 'block';
+        document.getElementById('modal-overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').style.display = 'none';
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+
+    function generateCalendar(month, year) {
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+    const calendarBody = document.getElementById('calendar-body');
+    calendarBody.innerHTML = '';
+
+    document.getElementById('month-year').innerText = `${monthNames[month]} ${year}`;
+
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        const row = document.createElement('tr');
+
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+
+            if (i === 0 && j < firstDay) {
+                // Empty cell for days before the first day of the month
+                const emptyCell = document.createTextNode('');
+                cell.appendChild(emptyCell);
+            } else if (date > daysInMonth) {
+                break;
+            } else {
+                // Add the date number
+                const cellText = document.createTextNode(date);
+                cell.appendChild(cellText);
+
+                // Find tasks for the current date
+                const currentDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                const tasksForDate = tasks.filter(task => {
+                // Convert task.due_date to 'YYYY-MM-DD' format
+                const taskDate = new Date(task.due_date).toISOString().split('T')[0];
+                return taskDate === currentDate;
+            });
+
+
+
+                // Add tasks to the cell
+                tasksForDate.forEach(task => {
+                    const taskDiv = document.createElement('button');
+                    taskDiv.textContent = task.category_name;
+                    taskDiv.style.marginTop = '5px';
+                    taskDiv.style.fontSize = '14px';
+                    taskDiv.style.color = '#B97375';
+                    cell.appendChild(taskDiv);
+                    taskDiv.addEventListener("click",()=>{
+                        const taskDetails = `${task.task_name}\n${task.category_name}\n${new Date(task.due_date).toISOString().split('T')[0]}`;
+                        openModal(taskDetails);
+                    })
+                });
+
+                date++;
+            }
+            row.appendChild(cell);
+        }
+        calendarBody.appendChild(row);
+    }
+}
+
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        generateCalendar(currentMonth, currentYear);
+    </script>
+</body>
+</html>

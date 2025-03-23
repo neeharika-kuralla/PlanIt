@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/nav.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include("includes/nav.ejs",{data})%>
+    <div id="homepage">
+        <h1>Welcome <%=data.fname%></h1>
+        <h1>Let's PlanIt</h1>
+        <blockquote id="quoteDisplay">Loading quote... <span id="author"></span></blockquote>
+    </div>
+    <div class="wrapper">
+        <div class="time">
+          <span class="hour">00</span>
+          <span class="colon">:</span>
+          <span class="minute">00</span>
+          <span class="colon">:</span>
+          <span class="second">00</span>
+        </div>
+        <div class="buttons">
+          <button class="start">Start</button>
+          <button class="stop">Stop</button>
+          <button class="reset">Reset</button>
+        </div>
+      </div>
+    <script>
+        const api_url = "https://api.quotable.io/random";
+        const quote = document.querySelector("blockquote");
+        const author = document.querySelector("#author");
+
+        async function getquote(url) {
+            try {
+                const response = await fetch(url);
+                
+                // Check if the response is successful (status code 200-299)
+                if (!response.ok) {
+                    throw new Error("Failed to fetch quote");
+                }
+
+                const data = await response.json();
+                quote.innerText = data.content;
+                author.innerText = `- ${data.author}`;
+            } catch (error) {
+                console.error("Error fetching quote:", error);
+                quote.innerText = "";
+                author.innerText = "";
+            }
+        }
+
+        getquote(api_url);
+
+        //stopwatch script
+        let hr = min = sec = ms = "0" + 0,
+    startTimer;
+  const startBtn = document.querySelector(".start"),
+   stopBtn = document.querySelector(".stop"),
+   resetBtn = document.querySelector(".reset");
+   startBtn.addEventListener("click", start);
+   stopBtn.addEventListener("click", stop);
+   resetBtn.addEventListener("click", reset);
+  function start() {
+    startBtn.classList.add("active");
+    stopBtn.classList.remove("stopActive");
+    startTimer = setInterval(()=>{
+        sec++;
+        sec = sec < 10 ? "0" + sec : sec;
+      if(sec == 60){
+        min++;
+        min = min < 10 ? "0" + min : min;
+        sec = "0" + 0;
+      }
+      if(min == 60){
+        hr++;
+        hr = hr < 10 ? "0" + hr : hr;
+        min = "0" + 0;
+      }
+      putValue();
+    },1000); //1000ms = 1s
+  }
+  function stop() {
+    startBtn.classList.remove("active");
+    stopBtn.classList.add("stopActive");
+    clearInterval(startTimer);
+  }
+  function reset() {
+    startBtn.classList.remove("active");
+    stopBtn.classList.remove("stopActive");
+    clearInterval(startTimer);
+    hr = min = sec = ms = "0" + 0;
+    putValue();
+  }
+  function putValue() {
+    document.querySelector(".second").innerText = sec;
+    document.querySelector(".minute").innerText = min;
+    document.querySelector(".hour").innerText = hr;
+  }
+
+    </script>
+</body>
+</html>

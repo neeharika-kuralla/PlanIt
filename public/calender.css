@@ -1,0 +1,34 @@
+/* Add borders to calendar table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+td {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+td:hover {
+    background-color: #f0f8ff;
+}
+
+.hidden-input {
+    display: none;
+    width: 100%;
+    margin-top: 5px;
+}

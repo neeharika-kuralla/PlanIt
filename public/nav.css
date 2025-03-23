@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar {
+    width: 200px;
+    transition: width 0.3s ease;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #11101d;
+    z-index: 100;
+}
+
+.sidebar.close {
+    width: 70px;
+}
+
+.sidebar .logo-details {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .logo-details i {
+    font-size: 30px;
+    color: #fff;
+    height: 50px;
+    min-width: 78px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.sidebar .logo-details .logo_name {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+.sidebar.close .logo-details .logo_name {
+    opacity: 0; /* Hide logo name when sidebar is closed */
+    pointer-events: none;
+}
+
+.sidebar .nav-links {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px 0 150px 0;
+    overflow: auto;
+}
+
+.sidebar .nav-links li {
+    position: relative;
+    list-style: none;
+    margin-top: 30px;
+}
+
+.sidebar .nav-links li:hover {
+    background: #1d1b31;
+}
+
+.sidebar .nav-links li i {
+    height: 50px;
+    min-width: 78px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    font-size: 20px;
+}
+
+.sidebar .nav-links li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.sidebar .nav-links li a .link_name {
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    transition: opacity 0.3s ease;
+}
+.sidebar .close .nav-links li a .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+.sidebar.close .nav-links li a .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar .nav-links li .icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Home Section */
+/* Home Section */
+.home-section {
+    position: relative;
+    width: calc(100% - 200px); 
+    margin-left: 200px; 
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    height: 100%; 
+}
+
+
+.sidebar.close ~ .home-section {
+    margin-left: 70px; 
+    width: calc(100% - 70px); 
+}
+
+
+.home-section .home-content {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.home-section .home-content .bx-menu,
+.home-section .home-content .text {
+    color: #11101d;
+    font-size: 35px;
+}
+
+.home-section .home-content .bx-menu {
+    margin: 0 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.home-section .home-content .text {
+    font-size: 26px;
+    font-weight: 600;
+    margin-left: 0; 
+    transition: margin-left 0.3s ease;
+}
+
+/* Sidebar Closed Adjustments */
+.sidebar.close ~ .home-section .home-content .text {
+    margin-left: 0;
+}
+/* Profile Dropdown Styling */
+.profile-dropdown {
+    position: fixed;
+    top: 10px;  /* Adjust as needed */
+    right: 20px; /* Position it to the right corner */
+    text-align: center;
+    margin-right: 10px; /* Add margin to the right */
+}
+
+.profile {
+    cursor: pointer;
+}
+
+.profile p {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+    /* border-radius: 50%;
+    border: 2px solid #ccc; */
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 150px;
+    min-height: 120px; /* Make sure there's enough space */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    display: none;
+    word-wrap: break-word; /* Allow wrapping of long text */
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    display: block;
+    width: 88%;
+}
+
+/* Hover Effect */
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show the dropdown */
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
